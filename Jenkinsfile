@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         choice(choices: ['dev', 'prod'], description: 'Select the workspace', name: 'WORKSPACE')
-        choice(choices: ['.tfvars-dev', '.tfvars-prod'], description: 'Select the .tfvars file', name: 'TFVARS_FILE')
+        choice(choices: ['dev.tfvars', 'nonprod.tfvars'], description: 'Select the .tfvars file', name: 'TFVARS_FILE')
     }
 
     stages {
