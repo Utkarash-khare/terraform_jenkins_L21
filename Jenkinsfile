@@ -17,6 +17,19 @@ pipeline {
             }
         }
 
+        stage('Prepare Workspace') {
+            when {
+                expression { params.WORKSPACE == 'dev' || params.WORKSPACE == 'prod' }
+            }
+            steps {
+                script {
+                    def workspace = params.WORKSPACE
+                    sh "terraform workspace new ${workspace} || true"
+                    sh "terraform workspace select ${workspace}"
+                }
+            }
+        }
+
         stage('Plan') {
             when {
                 expression { params.WORKSPACE == 'dev' || params.WORKSPACE == 'prod' }
