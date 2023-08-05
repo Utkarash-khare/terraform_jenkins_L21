@@ -32,7 +32,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "terraform apply -var-file=${params.TFVARS_FILE}"
+                    sh "terraform apply -var-file=${params.TFVARS_FILE} -auto-approve"
                 }
             }
         }
