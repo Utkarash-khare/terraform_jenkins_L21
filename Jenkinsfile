@@ -64,7 +64,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "terraform destroy -var-file=${params.TFVARS_FILE} -auto-approve"
+                    sh "terraform destroy -var-file=${params.TFVARS_FILE} ${autoApproveFlag}"
                 }
             }
         }
