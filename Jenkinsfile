@@ -4,10 +4,9 @@ pipeline {
     parameters {
         choice(choices: ['dev', 'prod'], description: 'Select the workspace', name: 'WORKSPACE')
         choice(choices: ['dev.tfvars', 'nonprod.tfvars'], description: 'Select the .tfvars file', name: 'TFVARS_FILE')
-        choice(choices: ['Plan', 'Apply', 'Destroy'], description: 'Select the action to perform', name: 'ACTION')
-        booleanParam(name: 'AUTO_PLAN', defaultValue: false, name: 'PLAN')
-        booleanParam(name: 'AUTO_APPLY', defaultValue: false, name: 'APPLY' )
-        booleanParam(name: 'AUTO_DESTROY', defaultValue: false, name: 'DESTROY')
+        booleanParam(name: 'RUN_PLAN', defaultValue: true)
+        booleanParam(name: 'RUN_APPLY', defaultValue: false)
+        booleanParam(name: 'RUN_DESTROY', defaultValue: false)
         booleanParam(name: 'AUTO_APPROVE', defaultValue: false, description: 'Automatically approve the Terraform changes (apply and destroy)')
     }
 
@@ -36,7 +35,7 @@ pipeline {
         stage('Plan') {
             when {
                 expression { params.WORKSPACE == 'dev' || params.WORKSPACE == 'prod' }
-                expression { params.PLAN == 'Plan' }
+                expression { params.RUN_PLAN == true }
             }
             steps {
                 script {
@@ -48,7 +47,7 @@ pipeline {
         stage('Apply') {
             when {
                 expression { params.WORKSPACE == 'dev' || params.WORKSPACE == 'prod' }
-                expression { params.APPLY == 'Apply' }
+                expression { params.RUN_APPLY == true }
             }
             steps {
                 script {
@@ -61,7 +60,7 @@ pipeline {
         stage('Destroy') {
             when {
                 expression { params.WORKSPACE == 'dev' || params.WORKSPACE == 'prod' }
-                expression { params.DESTROY == 'Destroy' }
+                expression { params.RUN_DESTROY == true }
             }
             steps {
                 script {
