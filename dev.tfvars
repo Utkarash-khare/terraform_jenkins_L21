@@ -18,7 +18,7 @@ num_instances = 1
 # Network network_tier
 network_tier = "STANDARD"
 
-hostname = jenikns-instance-dev
+hostname = "jenikns-instance-dev"
 
 # Service account to attach to the instance.
 # Uncomment and provide values if needed, otherwise, leave it as it is (null).
